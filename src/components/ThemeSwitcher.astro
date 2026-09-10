@@ -1,0 +1,244 @@
+---
+// Botón flotante para elegir el tema. Sin elección guardada se sigue el del
+// sistema; «Claro» y «Oscuro» se guardan en localStorage.
+const icons = {
+  system:
+    '<rect x="1.75" y="2.5" width="12.5" height="8.5" rx="1.5"/><path d="M5.5 13.5h5M8 11v2.5"/>',
+  light:
+    '<circle cx="8" cy="8" r="2.75"/><path d="M8 1.5v1.25M8 13.25v1.25M1.5 8h1.25M13.25 8h1.25M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9"/>',
+  dark: '<path d="M13.5 9.6A5.75 5.75 0 0 1 6.4 2.5a5.75 5.75 0 1 0 7.1 7.1Z"/>',
+};
+
+const options = [
+  { value: 'system', label: 'Sistema' },
+  { value: 'light', label: 'Claro' },
+  { value: 'dark', label: 'Oscuro' },
+] as const;
+---
+
+<div class="theme" data-theme-switcher>
+  <div class="menu" id="theme-menu" role="menu" aria-label="Tema" hidden>
+    {
+      options.map(({ value, label }) => (
+        <button type="button" role="menuitemradio" aria-checked="false" data-value={value}>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            set:html={icons[value]}
+          />
+          {label}
+          <svg
+            class="check"
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m3.5 8.5 3 3 6-7" />
+          </svg>
+        </button>
+      ))
+    }
+  </div>
+
+  <button
+    class="toggle"
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-controls="theme-menu"
+    aria-label="Tema"
+  >
+    {
+      options.map(({ value }) => (
+        <svg
+          class={`i-${value}`}
+          width="18"
+          height="18"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+          set:html={icons[value]}
+        />
+      ))
+    }
+  </button>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+    const wrap = document.querySelector('[data-theme-switcher]');
+    const toggle = wrap.querySelector('.toggle');
+    const menu = wrap.querySelector('.menu');
+    const items = [...menu.querySelectorAll('[data-value]')];
+    const names = { system: 'sistema', light: 'claro', dark: 'oscuro' };
+
+    const current = () => root.dataset.theme ?? 'system';
+
+    const sync = () => {
+      const value = current();
+      items.forEach((i) => i.setAttribute('aria-checked', String(i.dataset.value === value)));
+      toggle.setAttribute('aria-label', `Tema: ${names[value]}`);
+    };
+
+    const setOpen = (open) => {
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) items.find((i) => i.getAttribute('aria-checked') === 'true')?.focus();
+    };
+
+    const choose = (value) => {
+      if (value === 'system') delete root.dataset.theme;
+      else root.dataset.theme = value;
+      try {
+        if (value === 'system') localStorage.removeItem('theme');
+        else localStorage.setItem('theme', value);
+      } catch {}
+      sync();
+    };
+
+    toggle.addEventListener('click', () => setOpen(menu.hidden));
+
+    items.forEach((item) =>
+      item.addEventListener('click', () => {
+        choose(item.dataset.value);
+        setOpen(false);
+        toggle.focus();
+      }),
+    );
+
+    document.addEventListener('click', (e) => {
+      if (!menu.hidden && !wrap.contains(e.target)) setOpen(false);
+    });
+
+    wrap.addEventListener('keydown', (e) => {
+      if (menu.hidden) return;
+      if (e.key === 'Escape') {
+        setOpen(false);
+        toggle.focus();
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const step = e.key === 'ArrowDown' ? 1 : -1;
+        const index = items.indexOf(document.activeElement);
+        items[(index + step + items.length) % items.length].focus();
+      }
+    });
+
+    sync();
+  })();
+</script>
+
+<style>
+  .theme {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 20;
+  }
+
+  .toggle {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-soft);
+    color: var(--text-dim);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .toggle:hover,
+  .toggle[aria-expanded='true'] {
+    color: var(--text);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  }
+
+  /* El icono del botón refleja la elección actual. */
+  .toggle svg {
+    display: none;
+  }
+
+  :global(:root:not([data-theme])) .i-system,
+  :global(:root[data-theme='light']) .i-light,
+  :global(:root[data-theme='dark']) .i-dark {
+    display: block;
+  }
+
+  .menu {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 9.5rem;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg-soft);
+    box-shadow: var(--shadow);
+  }
+
+  .menu[hidden] {
+    display: none;
+  }
+
+  .menu button {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    color: var(--text-dim);
+    font-family: var(--font-pixel);
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .menu button:hover,
+  .menu button:focus-visible {
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    outline: none;
+  }
+
+  .menu button[aria-checked='true'] {
+    color: var(--accent);
+  }
+
+  .check {
+    margin-left: auto;
+    visibility: hidden;
+  }
+
+  .menu button[aria-checked='true'] .check {
+    visibility: visible;
+  }
+</style>

@@ -1,0 +1,85 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts, formatDate } from '../../lib/posts';
+
+const posts = await getPosts();
+---
+
+<Base
+  title="Blog — Carlos Ferreras"
+  description="Blog de Carlos Ferreras. Notas sobre lo que construyo: OpinaCraft, Ferreras SMP y lo que voy aprendiendo por el camino."
+>
+  <h1 class="intro">
+    Escribo sobre lo que construyo. Ahora mismo, un directorio de servidores de
+    Minecraft y el servidor que llevo yo.
+  </h1>
+
+  <ul class="posts">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}/`}>
+            <time datetime={post.data.publishedAt.toISOString()}>
+              {formatDate(post.data.publishedAt)}
+            </time>
+            <span class="title">{post.data.title}</span>
+            <span class="excerpt">{post.data.description}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Base>
+
+<style>
+  .intro {
+    margin: 0 0 clamp(3.5rem, 10vw, 5.5rem);
+    max-width: 32rem;
+    font-family: inherit;
+    font-size: 1.1875rem;
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-dim);
+    text-wrap: pretty;
+  }
+
+  .posts {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 3.5rem);
+  }
+
+  .posts a {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  time {
+    font-family: var(--font-pixel);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+  }
+
+  .title {
+    font-family: var(--font-pixel);
+    font-size: clamp(1.45rem, 1.2rem + 1vw, 1.85rem);
+    line-height: 1.25;
+    text-wrap: balance;
+    transition: color 0.2s ease;
+  }
+
+  .excerpt {
+    max-width: 34rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .posts a:hover .title,
+  .posts a:focus-visible .title {
+    color: var(--accent);
+  }
+</style>

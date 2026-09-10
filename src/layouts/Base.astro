@@ -1,0 +1,121 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import ThemeSwitcher from '../components/ThemeSwitcher.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  type?: 'website' | 'article';
+  publishedAt?: Date;
+}
+
+const { title, description, type = 'website', publishedAt } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#101a30" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link
+      rel="preload"
+      href="/fonts/geist-pixel-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/be-vietnam-pro-400.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Carlos Ferreras" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Carlos Ferreras"
+      href={new URL('rss.xml', Astro.site)}
+    />
+
+    <script is:inline>
+      // Aplica el tema elegido antes del primer pintado para evitar parpadeo.
+      // Sin elección guardada no se toca nada y manda el tema del sistema.
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Saltar al contenido</a>
+
+    <Nav />
+
+    <main id="main"><slot /></main>
+
+    <footer class="footer">
+      <span>© {year} Carlos Ferreras</span>
+      <span aria-hidden="true">·</span>
+      <a href="/blog/">Blog</a>
+    </footer>
+
+    <ThemeSwitcher />
+
+    <style>
+      /* Una sola columna de lectura, centrada. El padding superior deja
+         sitio al menú flotante. */
+      main {
+        flex: 1 0 auto;
+        width: 100%;
+        max-width: calc(var(--measure) + 2 * var(--gutter));
+        margin-inline: auto;
+        padding: clamp(7rem, 12vw, 11rem) var(--gutter) 0;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: 0.625rem;
+        padding: clamp(5rem, 14vw, 9rem) var(--gutter) clamp(2.5rem, 6vw, 4rem);
+        font-family: var(--font-pixel);
+        font-size: 0.875rem;
+        color: var(--text-dim);
+      }
+
+      .footer a {
+        transition: color 0.2s ease;
+      }
+
+      .footer a:hover {
+        color: var(--accent);
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+---
+interface Props {
+  name: 'mail' | 'external' | 'download';
+  size?: number;
+}
+
+const { name, size = name === 'mail' ? 16 : 14 } = Astro.props;
+
+const paths = {
+  mail: '<rect x="1.75" y="3.25" width="12.5" height="9.5" rx="1.5"/><path d="m2.25 4.25 5.75 4.5 5.75-4.5"/>',
+  external: '<path d="M5 11 11 5M6 5h5v5"/>',
+  download: '<path d="M8 2.5v8M4.75 7.5 8 10.75 11.25 7.5M3 13.5h10"/>',
+};
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 16 16"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  set:html={paths[name]}
+/>
+
+<style>
+  svg {
+    flex-shrink: 0;
+  }
+</style>

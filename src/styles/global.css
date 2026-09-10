@@ -1,0 +1,159 @@
+/* ---------------------------------------------------------------
+   Fuentes (self-hosted, subset latin)
+   --------------------------------------------------------------- */
+@font-face {
+  font-family: 'Geist Pixel';
+  src: url('/fonts/geist-pixel-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  src: url('/fonts/be-vietnam-pro-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Be Vietnam Pro';
+  src: url('/fonts/be-vietnam-pro-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------------------------------------------------
+   Tokens
+   --------------------------------------------------------------- */
+:root {
+  --font-pixel: 'Geist Pixel', ui-monospace, 'Cascadia Mono', Menlo, monospace;
+  --font-body: 'Be Vietnam Pro', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', sans-serif;
+
+  /* Cada color lleva su versión clara y oscura; `color-scheme` decide cuál
+     se usa. Sin elección guardada manda el sistema. */
+  --bg: light-dark(#eef1f7, #101a30);
+  --bg-soft: light-dark(#ffffff, #16223c);
+  --text: light-dark(#16223c, #dde5f2);
+  --text-dim: light-dark(#55647f, #93a5c2);
+  --line: light-dark(#ccd5e4, #26344f);
+  --accent: light-dark(#2b56ae, #8fb6ff);
+  --shadow: 0 10px 30px -12px light-dark(rgb(22 34 60 / 0.22), rgb(0 0 0 / 0.55));
+
+  --measure: 39rem;
+  --gutter: clamp(1.5rem, 5vw, 4rem);
+  --step: clamp(1.0625rem, 1rem + 0.4vw, 1.1875rem);
+
+  color-scheme: light dark;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* Navegadores sin light-dark(): se quedan con el tema oscuro de siempre. */
+@supports not (color: light-dark(#000, #fff)) {
+  :root {
+    --bg: #101a30;
+    --bg-soft: #16223c;
+    --text: #dde5f2;
+    --text-dim: #93a5c2;
+    --line: #26344f;
+    --accent: #8fb6ff;
+    --shadow: 0 10px 30px -12px rgb(0 0 0 / 0.55);
+    color-scheme: dark;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Base
+   --------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Los anclajes no quedan tapados por el menú flotante. */
+  scroll-padding-top: 5.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  font-family: var(--font-pixel);
+}
+
+.skip-link:focus {
+  left: var(--gutter);
+  top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="404 — Carlos Ferreras" description="Esta página no existe.">
+  <h1>404</h1>
+  <p>Esta página no existe. <a href="/">Volver al inicio</a>.</p>
+</Base>
+
+<style>
+  h1 {
+    margin: 0 0 1rem;
+    font-family: var(--font-pixel);
+    font-size: clamp(2.5rem, 2rem + 3vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-dim);
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 0.22em;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+</style>
