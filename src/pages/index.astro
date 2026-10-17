@@ -19,8 +19,9 @@ const cv = existsSync(join(process.cwd(), 'public', 'cv.pdf')) ? '/cv.pdf' : und
     <p class="lead">
       Desarrollador frontend en Oviedo. Hago interfaces con <strong
         >React, Next.js, Astro y Tailwind CSS</strong
-      > y mantengo varios proyectos propios con usuarios reales. Busco un puesto junior en un equipo
-      donde aprender y aportar desde el primer día.
+      > y llevo mis proyectos de principio a fin, también el despliegue. Busco un puesto junior en
+      Oviedo, León o en remoto/híbrido, en un equipo donde revisen mi código y pueda aportar desde el
+      principio.
     </p>
     <div class="actions">
       <a class="pill primary" href={`mailto:${contact.email}`}><Icon name="mail" />Escríbeme</a>
@@ -46,11 +47,6 @@ const cv = existsSync(join(process.cwd(), 'public', 'cv.pdf')) ? '/cv.pdf' : und
               <span class="where">{job.where}</span>
             </div>
             <p class="dim">{job.description}</p>
-            <ul class="tags">
-              {job.tags.map((t) => (
-                <li>{t}</li>
-              ))}
-            </ul>
           </li>
         ))
       }
@@ -140,29 +136,12 @@ const cv = existsSync(join(process.cwd(), 'public', 'cv.pdf')) ? '/cv.pdf' : und
           {skills.also.map((t) => <li>{t}</li>)}
         </ul>
       </div>
-    </div>
-  </section>
-
-  <section id="sobre-mi">
-    <h2>Sobre mí</h2>
-    <div class="about">
-      <p>
-        Soy Carlos, de Oviedo. Estudié los ciclos de DAM y DAW, y después trabajé en <strong
-          >TeamEQ</strong
-        >, en Gijón, haciendo componentes para su producto.
-      </p>
-      <p>
-        Desde 2022 no he trabajado para una empresa, pero no he dejado de programar. Llevo años
-        montando servidores de Minecraft con su comunidad, y eso me ha obligado a aprender lo que no
-        sale en un tutorial: <strong
-          >desplegar, hacer copias de seguridad y arreglar las cosas cuando se caen</strong
-        >.
-      </p>
-      <p>
-        Ahora busco un puesto junior. Me gustaría entrar en un equipo donde revisen mi código y me
-        digan qué mejorar, y aportar en frontend desde el principio. Si crees que puedo encajar, me
-        encantará hablar contigo.
-      </p>
+      <div>
+        <span class="label">Despliegue</span>
+        <ul class="tags">
+          {skills.deploy.map((t) => <li>{t}</li>)}
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -171,22 +150,6 @@ const cv = existsSync(join(process.cwd(), 'public', 'cv.pdf')) ? '/cv.pdf' : und
     <div class="contact">
       <p class="dim">Si tienes un puesto junior o quieres comentarme algo, escríbeme.</p>
       <a class="mail" href={`mailto:${contact.email}`}>{contact.email}</a>
-      <div class="links">
-        <a href={contact.linkedin} target="_blank" rel="noopener noreferrer"
-          >LinkedIn<Icon name="external" /></a
-        >
-        <a href={contact.github} target="_blank" rel="noopener noreferrer"
-          >GitHub<Icon name="external" /></a
-        >
-        {
-          cv && (
-            <a href={cv} download>
-              Descargar CV
-              <Icon name="download" />
-            </a>
-          )
-        }
-      </div>
     </div>
   </section>
 </Base>
@@ -519,13 +482,7 @@ const cv = existsSync(join(process.cwd(), 'public', 'cv.pdf')) ? '/cv.pdf' : und
     gap: 0.75rem;
   }
 
-  /* --- Sobre mí y contacto ----------------------------------------- */
-
-  .about {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
+  /* --- Contacto ----------------------------------------- */
 
   .contact {
     display: flex;

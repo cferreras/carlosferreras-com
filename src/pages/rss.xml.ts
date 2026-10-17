@@ -8,7 +8,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Carlos Ferreras',
     description:
-      'Notas sobre lo que construyo: OpinaCraft, Ferreras SMP y lo que aprendo por el camino.',
+      'Notas sobre lo que construyo: OpinaCraft, Cubusfera y lo que aprendo por el camino.',
     site: context.site!,
     trailingSlash: true,
     items: posts.map((post) => ({

@@ -11,7 +11,6 @@ export interface Job {
   title: string;
   where: string;
   description: string;
-  tags: string[];
   current?: boolean;
 }
 
@@ -22,16 +21,14 @@ export const experience: Job[] = [
     title: 'Desarrollo en proyectos propios',
     where: 'Oviedo · por mi cuenta',
     description:
-      'Después de TeamEQ he seguido programando por mi cuenta: webs para servidores de Minecraft y para un creador de contenido de TFT, bots de Discord, plugins en Java y, desde 2025, OpinaCraft. Todo con usuarios reales, así que también me ha tocado desplegar, hacer copias de seguridad y arreglar lo que se rompe.',
-    tags: ['TypeScript', 'React', 'Next.js', 'Astro', 'Java', 'PostgreSQL', 'Docker'],
+      'Webs para servidores de Minecraft y para un creador de contenido de TFT, bots de Discord, plugins en Java y, desde 2025, OpinaCraft. En todos me encargo del despliegue, las copias de seguridad y de arreglar lo que se rompe.',
   },
   {
     date: 'Julio 2021 — Enero 2022',
     title: 'Frontend Developer',
     where: 'TeamEQ · Gijón',
     description:
-      'Desarrollé componentes con Nuxt.js y Tailwind CSS siguiendo Atomic Design, para ordenar la interfaz y no duplicar código. Construí una biblioteca de más de 20 componentes reutilizables que mantenía la interfaz consistente en todo el producto.',
-    tags: ['Nuxt.js', 'Vue', 'Tailwind CSS', 'Atomic Design'],
+      'Desarrollé componentes con Nuxt.js y Tailwind CSS siguiendo Atomic Design, para ordenar la interfaz y no duplicar código. Construí una biblioteca de más de 20 componentes reutilizables que mantenía la interfaz consistente en todo el producto. Trabajaba en un equipo con dos desarrolladores de backend y un desarrollador full stack sénior.',
   },
 ];
 
@@ -57,7 +54,7 @@ export const projects: Project[] = [
   },
   {
     meta: '2026 — Actualidad',
-    title: 'Ferreras SMP',
+    title: 'Cubusfera',
     description:
       'La web del servidor de Minecraft que llevo: una comunidad pequeña, técnica y sin Pay2Win. Ahora estoy haciendo el panel privado con el que gestiono las solicitudes y los miembros.',
     tags: ['Astro', 'TypeScript'],
@@ -107,20 +104,6 @@ export const education = [
 
 export const skills = {
   main: ['TypeScript', 'JavaScript', 'React', 'Next.js', 'Astro', 'Tailwind CSS', 'PostgreSQL'],
-  also: [
-    'Nuxt',
-    'Angular',
-    'Java',
-    'Bash',
-    'Supabase',
-    'Convex',
-    'MongoDB',
-    'Docker',
-    'Kubernetes',
-    'NGINX',
-    'Caddy',
-    'Dokploy',
-    'GitHub Actions',
-    'GitLab CI',
-  ],
+  also: ['Vue', 'Nuxt', 'Angular', 'Drizzle', 'Strapi', 'Supabase', 'Java'],
+  deploy: ['Docker', 'GitHub Actions', 'Dokploy', 'Caddy'],
 };

@@ -33,8 +33,7 @@ El listado de `/blog/`, el RSS y el sitemap se actualizan solos, ordenados por `
 ## Editar el CV
 
 Todo el contenido de la portada (experiencia, proyectos, formación, habilidades y
-enlaces de contacto) está en `src/data/cv.ts`. Los textos de presentación y
-«Sobre mí» están en `src/pages/index.astro`.
+enlaces de contacto) está en `src/data/cv.ts`. El texto de presentación está en `src/pages/index.astro`.
 
 El botón «Descargar CV» solo aparece si existe `public/cv.pdf`.
 
