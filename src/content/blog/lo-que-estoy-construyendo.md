@@ -17,7 +17,7 @@ y leer opiniones de gente que ya juega en ellos. La idea es simple: que elegir
 servidor deje de ser abrir quince pestañas y fiarte de una lista ordenada por
 quien más paga.
 
-**[Ferreras SMP](https://mc.ferreras.dev)** es la otra mitad, y es más
+**[Cubusfera](https://mc.ferreras.dev)** (antes Ferreras SMP) es la otra mitad, y es más
 personal. Un servidor de Minecraft Java Vanilla técnico, sin Pay2Win y sin
 modpack obligatorio. Una microcomunidad pequeña a propósito, porque a partir de
 cierto tamaño un servidor deja de ser un sitio donde conoces a la gente.
@@ -36,7 +36,7 @@ nada. Cuando haya algo que enseñar, lo enseño.
 
 Notas sobre lo que construyo mientras lo construyo: decisiones técnicas que
 salieron bien, otras que no, cosas que aprendo llevando un servidor y una web
-con usuarios reales. Escribo en español porque es en el idioma en el que
+de verdad. Escribo en español porque es en el idioma en el que
 funcionan mis dos proyectos.
 
 Nada más. Nos leemos.

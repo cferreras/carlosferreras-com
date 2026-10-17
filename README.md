@@ -1,8 +1,7 @@
 # carlosferreras.com
 
 Web personal: CV en la portada y blog en `/blog/`. Astro estático, sin JavaScript
-de cliente salvo unas líneas en línea: el menú que marca la sección visible y el
-selector de tema.
+de cliente.
 
 ## Comandos
 
@@ -33,8 +32,7 @@ El listado de `/blog/`, el RSS y el sitemap se actualizan solos, ordenados por `
 ## Editar el CV
 
 Todo el contenido de la portada (experiencia, proyectos, formación, habilidades y
-enlaces de contacto) está en `src/data/cv.ts`. Los textos de presentación y
-«Sobre mí» están en `src/pages/index.astro`.
+enlaces de contacto) está en `src/data/cv.ts`. El texto de presentación está en `src/pages/index.astro`.
 
 El botón «Descargar CV» solo aparece si existe `public/cv.pdf`.
 
@@ -45,9 +43,8 @@ src/
   content/blog/       entradas en Markdown
   data/cv.ts          contenido del CV
   components/
-    Nav.astro         menú flotante
+    Nav.astro         cabecera con el nombre y los enlaces
     Icon.astro        iconos de línea
-    ThemeSwitcher.astro  botón flotante de tema
   layouts/Base.astro  shell: menú, columna, pie, <head> y metadatos
   pages/
     index.astro       portada: el CV
@@ -56,23 +53,18 @@ src/
     rss.xml.ts        feed
     404.astro
   styles/global.css   tipografías, tokens de color y base
-public/fonts/         Geist Pixel + Be Vietnam Pro (subconjunto latin, self-hosted)
+public/fonts/         Be Vietnam Pro (subconjunto latin, self-hosted)
 public/og.png         imagen de Open Graph
 ```
 
 ## Diseño
 
-Una sola columna de lectura centrada y un menú flotante arriba, en forma de
-píldora, con «Carlos» (vuelve a la portada), las secciones del CV y el blog. En
-la portada, el menú marca la sección que se está leyendo. En móvil el enlace al
-blog sale del menú y queda en el pie. Titulares en **Geist Pixel**, texto en
-**Be Vietnam Pro**, ambas servidas desde el propio dominio (~60 KB en total, sin
-peticiones a Google).
+Una sola columna de lectura centrada y una cabecera simple arriba, con «Carlos
+Ferreras» (vuelve a la portada), las secciones del CV y el blog. Todo el texto en
+**Be Vietnam Pro**, servida desde el propio dominio (sin peticiones a Google).
 
-Tema claro y oscuro, definidos una sola vez en `global.css` con `light-dark()`.
-Por defecto se sigue el tema del sistema; el botón flotante de abajo a la
-derecha permite elegir Sistema, Claro u Oscuro, y la elección se guarda en
-`localStorage`.
+Tema claro y oscuro definidos una sola vez en `global.css` con `light-dark()`;
+siempre se sigue el tema del sistema.
 
 Para regenerar `public/og.png` tras cambiar la marca: hay que renderizar la
 composición con las fuentes reales; se hizo con una captura de Playwright a

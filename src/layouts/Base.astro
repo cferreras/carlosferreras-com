@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import ThemeSwitcher from '../components/ThemeSwitcher.astro';
 
 interface Props {
   title: string;
@@ -26,17 +25,10 @@ const year = new Date().getFullYear();
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <meta name="theme-color" content="#101a30" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1115" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="generator" content={Astro.generator} />
 
-    <link
-      rel="preload"
-      href="/fonts/geist-pixel-400.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
     <link
       rel="preload"
       href="/fonts/be-vietnam-pro-400.woff2"
@@ -61,15 +53,6 @@ const year = new Date().getFullYear();
       title="Carlos Ferreras"
       href={new URL('rss.xml', Astro.site)}
     />
-
-    <script is:inline>
-      // Aplica el tema elegido antes del primer pintado para evitar parpadeo.
-      // Sin elección guardada no se toca nada y manda el tema del sistema.
-      try {
-        const theme = localStorage.getItem('theme');
-        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
-      } catch {}
-    </script>
   </head>
 
   <body>
@@ -81,40 +64,23 @@ const year = new Date().getFullYear();
 
     <footer class="footer">
       <span>© {year} Carlos Ferreras</span>
-      <span aria-hidden="true">·</span>
-      <a href="/blog/">Blog</a>
     </footer>
 
-    <ThemeSwitcher />
-
     <style>
-      /* Una sola columna de lectura, centrada. El padding superior deja
-         sitio al menú flotante. */
+      /* Una sola columna de lectura, centrada. */
       main {
         flex: 1 0 auto;
         width: 100%;
         max-width: calc(var(--measure) + 2 * var(--gutter));
         margin-inline: auto;
-        padding: clamp(7rem, 12vw, 11rem) var(--gutter) 0;
+        padding: clamp(3rem, 8vw, 5rem) var(--gutter) 0;
       }
 
       .footer {
-        display: flex;
-        justify-content: center;
-        align-items: baseline;
-        gap: 0.625rem;
-        padding: clamp(5rem, 14vw, 9rem) var(--gutter) clamp(2.5rem, 6vw, 4rem);
-        font-family: var(--font-pixel);
+        padding: clamp(3.5rem, 9vw, 5.5rem) var(--gutter) clamp(2rem, 5vw, 3rem);
+        text-align: center;
         font-size: 0.875rem;
         color: var(--text-dim);
-      }
-
-      .footer a {
-        transition: color 0.2s ease;
-      }
-
-      .footer a:hover {
-        color: var(--accent);
       }
     </style>
   </body>
